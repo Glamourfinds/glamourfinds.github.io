@@ -74,27 +74,17 @@ footer a{color:#e2c48c}
     <h2>Same piece, <em>three bodies.</em></h2>
     <p class="sub">Every look is a real product you can buy. We show it on three AI models (small, medium and plus-size) so your followers can picture it on themselves. These are from our own accounts.</p>
 
-    <div class="look night">
-      <div class="head">
-        <h3>Black Velvet Long-Sleeve Mini</h3>
-        <a class="acct" href="https://www.instagram.com/glamour.nightly/">Glamour Nightly ↗</a>
-      </div>
-      <div class="trio">
-        <figure><img src="../nightly/img/p1_s.jpg" alt="AI model in size S wearing the black velvet mini dress" loading="lazy"><figcaption>S</figcaption></figure>
-        <figure><img src="../nightly/img/p1_m.jpg" alt="AI model in size M wearing the black velvet mini dress" loading="lazy"><figcaption>M</figcaption></figure>
-        <figure><img src="../nightly/img/p1_xl.jpg" alt="AI model in size XL wearing the black velvet mini dress" loading="lazy"><figcaption>XL</figcaption></figure>
-      </div>
-    </div>
-
-    <div class="look day">
-      <div class="head">
-        <h3>Half-Zip Lounge Set</h3>
-        <a class="acct" href="https://www.instagram.com/glamour.daily1/">Glamour Daily ↗</a>
-      </div>
-      <div class="trio">
-        <figure><img src="../daily/img/p1_s.jpg" alt="AI model in size S wearing the half-zip lounge set" loading="lazy"><figcaption>S</figcaption></figure>
-        <figure><img src="../daily/img/p1_m.jpg" alt="AI model in size M wearing the half-zip lounge set" loading="lazy"><figcaption>M</figcaption></figure>
-        <figure><img src="../daily/img/p1_xl.jpg" alt="AI model in size XL wearing the half-zip lounge set" loading="lazy"><figcaption>XL</figcaption></figure>
+    <div id="looks">
+      <div class="look night">
+        <div class="head">
+          <h3>Black Velvet Long-Sleeve Mini</h3>
+          <a class="acct" href="https://www.instagram.com/glamour.nightly/">Glamour Nightly ↗</a>
+        </div>
+        <div class="trio">
+          <figure><img src="../nightly/img/p1_s.jpg" alt="AI model in size S wearing the black velvet mini dress" loading="lazy"><figcaption>S</figcaption></figure>
+          <figure><img src="../nightly/img/p1_m.jpg" alt="AI model in size M wearing the black velvet mini dress" loading="lazy"><figcaption>M</figcaption></figure>
+          <figure><img src="../nightly/img/p1_xl.jpg" alt="AI model in size XL wearing the black velvet mini dress" loading="lazy"><figcaption>XL</figcaption></figure>
+        </div>
       </div>
     </div>
     <p class="note">Stills from our try-on clips. The full clips are on <a href="https://www.instagram.com/glamour.nightly/">@glamour.nightly</a> and <a href="https://www.instagram.com/glamour.daily1/">@glamour.daily1</a>.</p>
@@ -143,5 +133,36 @@ footer a{color:#e2c48c}
   <a href="../">Shop</a> &nbsp;·&nbsp; <a href="https://www.instagram.com/glamour.nightly/">Instagram · Nightly</a> &nbsp;·&nbsp; <a href="https://www.instagram.com/glamour.daily1/">Instagram · Daily</a>
 </footer>
 
+<script>
+/* Auto-fills the examples from the shop's own product lists, newest first.
+   Adding a product to nightly/ or daily/products.json updates this page too. */
+(function(){
+  var PER=2; // latest looks shown per account
+  var accts=[
+    {key:"nightly",cls:"night",label:"Glamour Nightly",ig:"https://www.instagram.com/glamour.nightly/"},
+    {key:"daily",cls:"day",label:"Glamour Daily",ig:"https://www.instagram.com/glamour.daily1/"}
+  ];
+  function esc(t){var d=document.createElement("div");d.textContent=t==null?"":String(t);return d.innerHTML;}
+  Promise.all(accts.map(function(a){
+    return fetch("../"+a.key+"/products.json",{cache:"no-store"}).then(function(r){return r.ok?r.json():[];}).catch(function(){return [];});
+  })).then(function(lists){
+    var html="";
+    var rounds=Math.max.apply(null,lists.map(function(l){return Math.min(l.length,PER);}));
+    for(var i=0;i<rounds;i++){
+      accts.forEach(function(a,ai){
+        var p=lists[ai][i]; if(!p||!p.images) return;
+        var sizes=[["s","S"],["m","M"],["xl","XL"]].filter(function(z){return p.images[z[0]];});
+        if(sizes.length<2) return;
+        html+='<div class="look '+a.cls+'"><div class="head"><h3>'+esc(p.name)+'</h3><a class="acct" href="'+a.ig+'">'+a.label+' ↗</a></div><div class="trio">';
+        sizes.forEach(function(z){
+          html+='<figure><img src="../'+a.key+'/img/'+encodeURIComponent(p.images[z[0]])+'" alt="AI model in size '+z[1]+' wearing the '+esc(p.name)+'" loading="lazy"><figcaption>'+z[1]+'</figcaption></figure>';
+        });
+        html+='</div></div>';
+      });
+    }
+    if(html) document.getElementById("looks").innerHTML=html;
+  });
+})();
+</script>
 </body>
 </html>
