@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Glamour Daily Shop</title>
+<meta name="description" content="cozy sets, each one shown on three bodies. swipe to see it on s, m and xl.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:ital,wght@1,400;1,500;1,700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* layout: full-bleed swipe rail per look, arch-window photos melt into the cream page */
+  --bg:#fbf0e7; --ink:#4e342a; --muted:#8a6c5e; --line:rgba(150,100,80,.25);
+  --accent:#966450; --glow:#f6c9a4; --on-accent:#fffaf5;
+  --display:'Playfair Display',Georgia,'Times New Roman',serif;
+  --body:'Montserrat',system-ui,-apple-system,sans-serif;
+  --grain-opacity:.05; --slide-radius:999px 999px 6px 6px; color-scheme:light;
+  --gutter:20px; --max:560px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg)}
+body{color:var(--ink);font:400 15px/1.55 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden;padding-bottom:96px}
+body::before{content:"";position:fixed;inset:0;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .55 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");opacity:var(--grain-opacity);pointer-events:none;z-index:50;mix-blend-mode:overlay}
+.page{max-width:var(--max);margin:0 auto;display:flex;flex-direction:column;gap:56px;padding-top:28px;position:relative;z-index:1}
+.pad{padding:0 var(--gutter)}
+
+/* masthead */
+.mast{display:flex;flex-direction:column;gap:14px}
+.mastrow{display:flex;justify-content:space-between;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.kicker{font:600 .8rem var(--body);color:var(--accent)}
+.word{font-family:var(--display);font-style:italic;font-weight:500;line-height:.86;letter-spacing:-.02em;margin:0;color:var(--ink)}
+.intro{margin:0;max-width:34ch;color:var(--muted);font-size:.98rem}
+
+/* a look */
+.look{position:relative;display:flex;flex-direction:column;gap:14px;isolation:isolate}
+.lookhead{display:flex;align-items:center;gap:12px;padding:0 var(--gutter);font:500 .72rem var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);font-variant-numeric:tabular-nums}
+.lookhead .rule{flex:1;height:1px;background:var(--line)}
+.rail{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding:0 7%;padding:0 7%;scrollbar-width:none;-webkit-overflow-scrolling:touch;outline:none}
+.rail::-webkit-scrollbar{display:none}
+.slide{flex:0 0 86%;margin:0;position:relative;scroll-snap-align:center;aspect-ratio:900/1612;border-radius:var(--slide-radius);overflow:hidden}
+.slide img{width:100%;height:100%;object-fit:cover;display:block;max-width:100%;-webkit-mask-image:linear-gradient(to bottom,#000 70%,transparent 100%);mask-image:linear-gradient(to bottom,#000 70%,transparent 100%)}
+.sizeTag{position:absolute;left:18px;top:14px;font:italic 700 clamp(3rem,15vw,4.4rem)/1 var(--display);letter-spacing:-.02em;text-shadow:0 4px 30px rgba(0,0,0,.55)}
+.tabs{display:flex;align-items:center;gap:8px;padding:0 var(--gutter);margin-top:2px}
+.tab{font:600 .78rem var(--body);letter-spacing:.1em;min-width:46px;height:34px;border-radius:99px;border:1px solid var(--line);background:transparent;color:var(--muted);cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.tab[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.ai{margin-left:auto;font-size:.68rem;letter-spacing:.06em;color:var(--muted)}
+.title{margin:-104px 0 0;padding:0 var(--gutter);position:relative;z-index:2;font:italic 500 clamp(2.4rem,11vw,3.4rem)/.98 var(--display);letter-spacing:-.015em;text-wrap:balance;pointer-events:none;text-shadow:0 2px 24px var(--bg)}
+.note{margin:4px 0 0;padding:0 var(--gutter);max-width:46ch}
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:6px var(--gutter) 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.facts div{padding:12px 0;display:flex;flex-direction:column;gap:2px}
+.facts div+div{padding-left:14px;border-left:1px solid var(--line)}
+.facts dt{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.facts dd{margin:0;font-weight:600;font-variant-numeric:tabular-nums}
+.buy{margin:6px var(--gutter) 0;display:flex;justify-content:space-between;align-items:center;text-decoration:none;color:var(--ink);font:600 .82rem var(--body);letter-spacing:.14em;text-transform:uppercase;padding:16px 0;border-bottom:1px solid var(--accent)}
+.buy span{font-size:1.2rem;color:var(--accent);transition:transform .2s}
+.buy:hover span{transform:translateX(4px)}
+.tab:focus-visible,.buy:focus-visible,.bar a:focus-visible,.rail:focus-visible,footer a:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* sticky shop bar */
+.bar{position:fixed;left:0;right:0;bottom:0;z-index:40;padding:12px var(--gutter) calc(12px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 55%,transparent)}
+.bar .in{max-width:calc(var(--max) - 2*var(--gutter));margin:0 auto;display:flex;align-items:center;gap:12px}
+.bar .nm{flex:1;min-width:0;font:italic 500 1.05rem var(--display);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar a{flex:0 0 auto;text-decoration:none;background:var(--accent);color:var(--on-accent);font:600 .78rem var(--body);letter-spacing:.12em;text-transform:uppercase;padding:13px 18px;border-radius:99px}
+
+footer{display:flex;flex-direction:column;gap:8px;font-size:.78rem;color:var(--muted);padding-bottom:8px}
+footer p{margin:0;max-width:52ch}
+footer a{color:var(--accent)}
+
+/* one orchestrated entrance */
+@media (prefers-reduced-motion:no-preference){
+  .word{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+  .look:first-of-type .slide{animation:rise .9s cubic-bezier(.2,.7,.2,1) both}
+  .look:first-of-type .slide:nth-child(2){animation-delay:.08s}
+  .look:first-of-type .slide:nth-child(3){animation-delay:.16s}
+  .look:first-of-type .title{animation:rise 1s .25s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes rise{from{transform:translateY(14px);opacity:.001}to{transform:none;opacity:1}}
+}
+
+body::after{content:"";position:fixed;top:-20vh;right:-30vw;width:90vw;height:70vh;background:radial-gradient(closest-side,var(--glow),transparent);opacity:.75;pointer-events:none;z-index:-1}
+.kicker{letter-spacing:.3em;text-transform:lowercase}
+.word{font-size:clamp(3.8rem,18vw,5.6rem);text-transform:lowercase}
+.title{color:var(--ink);text-transform:lowercase}
+.sizeTag{color:#fffaf5;text-shadow:0 2px 18px rgba(78,52,42,.45);top:24%;left:22px}
+.slide img{-webkit-mask-image:linear-gradient(to bottom,#000 62%,transparent 98%);mask-image:linear-gradient(to bottom,#000 62%,transparent 98%)}
+
+</style>
+</head>
+<body>
+<main class="page">
+  <header class="mast pad">
+    <div class="mastrow"><span>@glamour.daily1</span><span>1 look</span></div>
+    <div>
+      <div class="kicker">glamour</div>
+      <h1 class="word">daily</h1>
+    </div>
+    <p class="intro">cozy sets, each one shown on three bodies. swipe to see it on s, m and xl.</p>
+  </header>
+
+  <section class="look" id="look-01" data-name="Half-Zip Lounge Set" data-link="https://link.amazon/B07TT7YLU">
+    <div class="lookhead"><span>Look 01</span><span class="rule"></span><span>Nov 24 · new</span></div>
+    <div class="rail" tabindex="0" aria-label="Swipe to see the Half-Zip Lounge Set on sizes S, M and XL">
+      <figure class="slide" data-i="0">
+        <img src="img/p1_s.jpg" alt="AI-generated model wearing the Half-Zip Lounge Set, size S" width="900" height="1612" >
+        <span class="sizeTag">s</span>
+      </figure>
+      <figure class="slide" data-i="1">
+        <img src="img/p1_m.jpg" alt="AI-generated model wearing the Half-Zip Lounge Set, size M" width="900" height="1612" fetchpriority="high">
+        <span class="sizeTag">m</span>
+      </figure>
+      <figure class="slide" data-i="2">
+        <img src="img/p1_xl.jpg" alt="AI-generated model wearing the Half-Zip Lounge Set, size XL" width="900" height="1612" >
+        <span class="sizeTag">xl</span>
+      </figure>
+    </div>
+    <h2 class="title">Half-Zip Lounge Set</h2>
+    <div class="tabs" role="group" aria-label="See it on size"><button type="button" class="tab" data-i="0" aria-pressed="false">S</button><button type="button" class="tab" data-i="1" aria-pressed="true">M</button><button type="button" class="tab" data-i="2" aria-pressed="false">XL</button><span class="ai">AI-generated models</span></div>
+    <p class="note">ANRABESS quarter-zip sweatshirt with the big fold-over collar and matching wide-leg pants. Soft, matching, done.</p>
+    <dl class="facts">
+      <div><dt>Shown on</dt><dd>S · M · XL</dd></div>
+      <div><dt>Sold in</dt><dd>XS–XL</dd></div>
+      <div><dt>Ships from</dt><dd>Amazon</dd></div>
+    </dl>
+    <a class="buy" href="https://link.amazon/B07TT7YLU" target="_blank" rel="sponsored noopener">Shop this look on Amazon <span aria-hidden="true">→</span></a>
+  </section>
+  <footer class="pad">
+    <p>As an Amazon Associate I earn from qualifying purchases. Models are AI-generated; every piece is a real product sold on Amazon.</p>
+    <p>a new set every morning at 8. after dark: <a href="https://www.instagram.com/glamour.nightly/" target="_blank" rel="noopener">@glamour.nightly</a></p>
+  </footer>
+</main>
+<div class="bar" aria-label="Shop the look on screen">
+  <div class="in"><span class="nm" id="barName">Half-Zip Lounge Set</span><a id="barLink" href="https://link.amazon/B07TT7YLU" target="_blank" rel="sponsored noopener">Shop on Amazon</a></div>
+</div>
+<script>
+(function(){
+  document.querySelectorAll('.look').forEach(function(look){
+    var rail=look.querySelector('.rail'), slides=[].slice.call(rail.querySelectorAll('.slide')), tabs=[].slice.call(look.querySelectorAll('.tab'));
+    function go(i,smooth){var s=slides[i];rail.scrollTo({left:s.offsetLeft-(rail.clientWidth-s.clientWidth)/2,behavior:smooth?'smooth':'auto'});}
+    function mark(i){tabs.forEach(function(t,k){t.setAttribute('aria-pressed',k===i?'true':'false');});}
+    tabs.forEach(function(t,k){t.addEventListener('click',function(){go(k,true);mark(k);});});
+    var raf;rail.addEventListener('scroll',function(){cancelAnimationFrame(raf);raf=requestAnimationFrame(function(){
+      var c=rail.scrollLeft+rail.clientWidth/2,best=0,d=1e9;slides.forEach(function(s,k){var m=Math.abs(s.offsetLeft+s.clientWidth/2-c);if(m<d){d=m;best=k;}});mark(best);});});
+    requestAnimationFrame(function(){go(1,false);});window.addEventListener('load',function(){go(1,false);mark(1);});
+  });
+  var nm=document.getElementById('barName'), ln=document.getElementById('barLink');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){nm.textContent=e.target.dataset.name;ln.href=e.target.dataset.link;}});},{rootMargin:'-45% 0px -45% 0px'});
+    document.querySelectorAll('.look').forEach(function(l){io.observe(l);});
+  }
+})();
+</script>
+</body>
+</html>
