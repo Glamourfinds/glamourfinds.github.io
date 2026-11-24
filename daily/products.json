@@ -13,6 +13,19 @@
   }
  },
  {
+  "id": "p5",
+  "name": "Coffee Crop Top Lounge Set",
+  "note": "Trendy Queen 2-piece set in coffee brown: long-sleeve crew-neck crop top with wide-leg drawstring pants (with pockets). Thanksgiving-morning cozy.",
+  "link": "https://link.amazon/B0hy0ikDP",
+  "posted": "Nov 26",
+  "sizes": "S–XL",
+  "images": {
+   "s": "p5_s.jpg",
+   "m": "p5_m.jpg",
+   "xl": "p5_xl.jpg"
+  }
+ },
+ {
   "id": "p3",
   "name": "Gray Oversized Sweatsuit Set",
   "note": "Trendy Queen 2-piece set: oversized snap-button mock-neck sweatshirt with matching wide-leg sweatpants. Lazy-Sunday cozy.",
