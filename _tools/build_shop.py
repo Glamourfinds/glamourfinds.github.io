@@ -1,12 +1,13 @@
 """Render a Glamour shop (lookbook) page from products.json.
 usage: python3 build_shop.py <nightly|daily> [outdir]
 products.json: newest first, each {id, name, note, link, posted, sizes, images:{s,m,xl}}
+  optional: buy_label (text of the main button), also: [{label, link}] extra pieces in the same look
 Look numbers count up from the oldest product (oldest = Look 01).
 """
 import json, sys, html, os
 
 acc = sys.argv[1]
-root = f'/home/claude/shop/{acc}'
+root = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), acc)  # repo/<acc>
 outdir = sys.argv[2] if len(sys.argv) > 2 else root
 products = json.load(open(f'{root}/products.json'))
 N = len(products)
@@ -77,6 +78,9 @@ def look(p, i):
     tabs = ''.join(
         f'<button type="button" class="tab" data-i="{j}" aria-pressed="{"true" if j == 1 else "false"}">{k.upper()}</button>'
         for j, k in enumerate(('s', 'm', 'xl')))
+    also = ''.join(
+        f'\n    <a class="buy" href="{E(a["link"])}" target="_blank" rel="sponsored noopener">{E(a["label"])} <span aria-hidden="true">→</span></a>'
+        for a in p.get('also', []))
     return f'''
   <section class="look" id="look-{no:02d}" data-name="{E(p["name"])}" data-link="{E(p["link"])}">
     <div class="lookhead"><span>Look {no:02d}</span><span class="rule"></span><span>{E(p["posted"])}{" · new" if i == 0 else ""}</span></div>
@@ -90,7 +94,7 @@ def look(p, i):
       <div><dt>Sold in</dt><dd>{E(p["sizes"])}</dd></div>
       <div><dt>Ships from</dt><dd>Amazon</dd></div>
     </dl>
-    <a class="buy" href="{E(p["link"])}" target="_blank" rel="sponsored noopener">Shop this look on Amazon <span aria-hidden="true">→</span></a>
+    <a class="buy" href="{E(p["link"])}" target="_blank" rel="sponsored noopener">{E(p.get("buy_label", "Shop this look on Amazon"))} <span aria-hidden="true">→</span></a>{also}
   </section>'''
 
 
