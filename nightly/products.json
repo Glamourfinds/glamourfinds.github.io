@@ -1,5 +1,25 @@
 [
  {
+  "id": "p4",
+  "name": "Burgundy Satin Blouse + Faux Leather Leggings",
+  "note": "Zeagoo satin long-sleeve button-down in burgundy with high-waist fleece-lined faux leather leggings. Holiday party, date night, NYE dinner.",
+  "link": "https://link.amazon/B0iMbbbPf",
+  "buy_label": "Shop the satin blouse on Amazon",
+  "also": [
+   {
+    "label": "Shop the faux leather leggings on Amazon",
+    "link": "https://link.amazon/B0g2Rm6mJ"
+   }
+  ],
+  "posted": "Nov 26",
+  "sizes": "S–XL",
+  "images": {
+   "s": "p4_s.jpg",
+   "m": "p4_m.jpg",
+   "xl": "p4_xl.jpg"
+  }
+ },
+ {
   "id": "p3",
   "name": "Brown Mock-Neck Ruched Maxi",
   "note": "Mojessy short-sleeve mock-neck bodycon maxi with ruching at the hip. Holiday party, cocktail night, dinner out.",
