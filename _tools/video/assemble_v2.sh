@@ -28,3 +28,10 @@ ffmpeg -v error -y \
   [x2][hook]overlay=0:0:enable='lt(t,2.2)':shortest=1,format=yuv420p[v]" \
   -map "[v]" -c:v libx264 -preset veryfast -crf 18 -profile:v high -pix_fmt yuv420p -r 30 -movflags +faststart -an "$OUT"
 ffprobe -v error -show_entries stream=width,height,r_frame_rate:format=duration -of csv=p=0 "$OUT"
+
+# Music for IG/FB (they have no in-app sound via PostFast). MUSIC=path/to/bed.m4a -> also writes <out>_music.mp4
+if [ -n "$MUSIC" ]; then
+  D=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$OUT")
+  FO=$(python3 -c "print(round($D-0.9,2))")
+  ffmpeg -v error -y -i "$OUT" -i "$MUSIC" -map 0:v -map 1:a -c:v copy -af "afade=t=out:st=$FO:d=0.9" -c:a aac -b:a 192k -t "$D" -movflags +faststart "${OUT%.mp4}_music.mp4"
+fi
